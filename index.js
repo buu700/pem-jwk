@@ -1,5 +1,4 @@
 var asn = require('asn1.js')
-var factor = require('./factor')
 var one = new asn.bignum(1)
 
 function urlize(base64) {
@@ -158,25 +157,6 @@ function pem2jwk(pem, extras) {
   return decoder(new Buffer(text.replace(/[^\w\d\+\/=]+/g, ''), 'base64'), extras)
 }
 
-function recomputePrimes(jwk) {
-  var pq = factor(jwk.e, jwk.d, jwk.n)
-  var p = pq.p
-  var q = pq.q
-  var dp = jwk.d.mod(p.sub(one))
-  var dq = jwk.d.mod(q.sub(one))
-  var qi = q.invm(p)
-  return {
-    n: jwk.n,
-    e: jwk.e,
-    d: jwk.d,
-    p: p,
-    q: q,
-    dp: dp,
-    dq: dq,
-    qi: qi
-  }
-}
-
 function parse(jwk) {
   return {
     n: string2bn(jwk.n),
@@ -199,7 +179,7 @@ function jwk2pem(json) {
   var data = Buffer(0)
   if (isPrivate) {
     if (!jwk.p) {
-      jwk = recomputePrimes(jwk)
+      throw new Error('JWK primes not computed.')
     }
     jwk.version = 'two-prime'
     data = RSAPrivateKey.encode(jwk, 'der')

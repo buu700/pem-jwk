@@ -1,7 +1,7 @@
 {
-  "name": "pem-jwk",
-  "version": "1.5.1",
-  "description": "convert between PEM and JWK formats",
+  "name": "pem-jwk-norecompute",
+  "version": "1.0.0",
+  "description": "pem-jwk fork optimized for browser module bundling",
   "main": "index.js",
   "bin": "./bin/pem-jwk.js",
   "scripts": {
