@@ -79,8 +79,6 @@ var PrivateKeyInfo = asn.define('PrivateKeyInfo', function () {
   )
 })
 
-const RSA_OID = '1.2.840.113549.1.1.1'
-
 function addExtras(obj, extras) {
   extras = extras || {}
   Object.keys(extras).forEach(
